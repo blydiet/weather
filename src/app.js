@@ -18,8 +18,24 @@ async function findLocation  (){
     longitude = data.longitude
     
     date = displayDate()
-    console.log(date)
+    findWeather(latitude, longitude, date)
+    
    }
    
    findLocation()
    
+async function findWeather(latitude, longitude, date) {
+    const {data} = await axios.get(`https://se-weather-api.herokuapp.com/api/v1/forecast?latitude=${latitude}&longitude=${longitude}&date=${date}`)
+    let weather = data.daily.data
+    for (let i = 1; i < 3; i++){
+        day = new Date(convertDate(weather[i].time))
+        const {data} = await axios.get(`https://se-weather-api.herokuapp.com/api/v1/forecast?latitude=${latitude}&longitude=${longitude}&date=${displayDate()}`)
+        console.log(data)
+    }
+ 
+
+}
+
+
+
+
